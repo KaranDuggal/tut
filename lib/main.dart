@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tutorial_hindi/drawer.dart';
 
 void main() {
   runApp(
@@ -11,8 +12,22 @@ void main() {
       ));
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  TextEditingController _nameController = TextEditingController();
+  var myText = "Change me";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,33 +35,40 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text('My App'),
         ),
-        body: Container(color: Colors.yellow),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              // DrawerHeader(child: Text('My Name Is KaranDuggal',style: TextStyle(color: Colors.white),),
-              // decoration: BoxDecoration(color: Colors.red),
-              // ),
-              UserAccountsDrawerHeader(
-                accountName: Text("KaranDuggal khan"), 
-                accountEmail: Text('Duggalkaran400@gmail.com'),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage('https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'),
-                  ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Card(
+              child: Column(
+                children: [
+                  Image.asset("assets/images/bg.jpg",fit: BoxFit.cover,),
+                  SizedBox(height: 10,),
+                  Text(myText,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  TextField(
+                    controller: _nameController,
+                    keyboardType: TextInputType.name,
+                    // obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "enter something",
+                      labelText: "name",
+                      border: OutlineInputBorder()
+                    ),
+                  )
+                ],
               ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text('User'),
-                subtitle: Text('persional'),
-                trailing: Icon(Icons.edit),)
-            ],
+            ),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
+        drawer: MyDrawer(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
-          onPressed: (){},
-          child: Icon(Icons.add),
+          onPressed: (){
+            myText = _nameController.text;
+            setState(() {
+              
+            });
+          },
+          child: Icon(Icons.refresh),
           ),
       );
   }
